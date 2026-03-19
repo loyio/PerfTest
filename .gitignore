@@ -39,3 +39,17 @@
 
 # debug information files
 *.dwo
+
+# CMake build directories
+build/
+out/
+cmake-build-*/
+
+# IDE
+.vs/
+.vscode/settings.json
+*.user
+
+# Test temp files
+*.tmp
+*.etl
