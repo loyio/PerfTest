@@ -214,17 +214,25 @@ ADD_PERF_CASE(SortBenchmarkCase)
 
 ### Tracy Profiler
 
-1. 在代码中插入 Tracy 标记 (需引入 Tracy 头文件):
+1. 编译时启用 Tracy:
+   ```powershell
+   cmake -DPERF_ENABLE_TRACY=ON ..
+   cmake --build . --config RelWithDebInfo --target PerfCaseGUI
+   ```
+2. 项目已在关键路径自动插入 Tracy 标记:
+   - `FrameMark` — 主循环帧边界
+   - `ZoneScoped` — DrawUI、PerfCase::onUpdate 等函数
+   - 各 PerfCase 用例的 onUpdate 也已标记
+3. 启动 Tracy Profiler 连接到应用，查看实时帧图和 Zone 耗时
+4. 如需在自定义用例中添加标记:
    ```cpp
-   #include <tracy/Tracy.hpp>
+   #include "tracy_integration.h"
 
    void onUpdate(float dt) override {
-       ZoneScoped;  // Tracy 标记
+       PERF_ZONE_SCOPED;  // Tracy 标记
        // ... 工作负载 ...
    }
    ```
-2. 编译时启用 Tracy (`-DTRACY_ENABLE`)
-3. 启动 Tracy Profiler 连接到应用，查看实时帧图和 Zone 耗时
 
 ### Intel VTune Profiler
 

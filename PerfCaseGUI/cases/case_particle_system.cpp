@@ -6,6 +6,7 @@
  */
 
 #include "perf_case.h"
+#include "tracy_integration.h"
 #include "imgui.h"
 #include <vector>
 #include <random>
@@ -31,6 +32,7 @@ public:
     }
 
     void onUpdate(float dt) override {
+        PERF_ZONE_SCOPED_N("ParticleUpdate");
         if (static_cast<int>(particles_.size()) != count_) rebuild();
 
         for (auto& p : particles_) {

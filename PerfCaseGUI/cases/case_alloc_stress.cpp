@@ -6,6 +6,7 @@
  */
 
 #include "perf_case.h"
+#include "tracy_integration.h"
 #include "imgui.h"
 #include <vector>
 #include <cstring>
@@ -26,6 +27,7 @@ public:
     }
 
     void onUpdate(float) override {
+        PERF_ZONE_SCOPED_N("AllocStress");
         std::vector<void*> ptrs;
         ptrs.reserve(allocCount_);
 

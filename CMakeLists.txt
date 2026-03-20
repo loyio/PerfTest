@@ -11,9 +11,35 @@ if(WIN32)
 endif()
 
 # ============================================================
+# Tracy Profiler (可选，通过 PERF_ENABLE_TRACY 开关)
+#
+# 启用方法:
+#   cmake -DPERF_ENABLE_TRACY=ON ..
+#
+# 启用后需运行 Tracy Profiler GUI 连接目标进程查看实时数据
+# 下载地址: https://github.com/wolfpld/tracy/releases
+# ============================================================
+option(PERF_ENABLE_TRACY "Enable Tracy Profiler integration" OFF)
+
+include(FetchContent)
+
+if(PERF_ENABLE_TRACY)
+    set(TRACY_ENABLE ON CACHE BOOL "Enable Tracy profiling" FORCE)
+    FetchContent_Declare(
+        tracy
+        GIT_REPOSITORY https://github.com/wolfpld/tracy.git
+        GIT_TAG        v0.13.1
+        GIT_SHALLOW    TRUE
+    )
+    FetchContent_MakeAvailable(tracy)
+    message(STATUS "Tracy Profiler ENABLED (v0.13.1)")
+else()
+    message(STATUS "Tracy Profiler DISABLED (use -DPERF_ENABLE_TRACY=ON to enable)")
+endif()
+
+# ============================================================
 # ImGui (通过 FetchContent 获取)
 # ============================================================
-include(FetchContent)
 FetchContent_Declare(
     imgui
     GIT_REPOSITORY https://github.com/ocornut/imgui.git
