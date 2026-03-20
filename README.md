@@ -77,6 +77,9 @@ cmake .. -G "Visual Studio 17 2022"
 # 或使用 Ninja (更快)
 cmake .. -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
 
+# 启用 Tracy Profiler (可选)
+cmake .. -G "Visual Studio 17 2022" -DPERF_ENABLE_TRACY=ON
+
 # 构建所有目标
 cmake --build . --config RelWithDebInfo
 
@@ -139,7 +142,7 @@ cmake --build . --config RelWithDebInfo --target stutter_cache_miss
 
 | 工具 | 用途 | 获取方式 |
 |------|------|---------|
-| **Tracy** | 实时帧/CPU/GPU/内存分析 | GitHub 开源 (BSD) |
+| **Tracy** | 实时帧/CPU/GPU/内存分析 | GitHub 开源 (BSD), **已集成** |
 | **Optick** | 轻量级游戏 Profiler | GitHub 开源 (MIT) |
 | **Superluminal** | 商业级低开销采样分析 | 商业 ($299/年) |
 

@@ -6,6 +6,7 @@
  */
 
 #include "perf_case.h"
+#include "tracy_integration.h"
 #include "imgui.h"
 #include <vector>
 #include <random>
@@ -35,6 +36,7 @@ public:
     }
 
     void onUpdate(float) override {
+        PERF_ZONE_SCOPED_N("CacheMiss");
         // Continuous mode: run selected access pattern every frame
         if (continuous_) {
             if (randomAccess_)
