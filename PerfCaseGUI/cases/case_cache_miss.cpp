@@ -36,7 +36,7 @@ public:
     }
 
     void onUpdate(float) override {
-        PERF_ZONE_SCOPED_N("CacheMiss");
+        ZoneScopedN("CacheMiss");
         // Continuous mode: run selected access pattern every frame
         if (continuous_) {
             if (randomAccess_)

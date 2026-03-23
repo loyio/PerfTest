@@ -92,7 +92,7 @@ static PerfCase* g_selectedCase   = nullptr;
 static bool      g_showDemoWindow = false;
 
 void DrawUI(float deltaTime) {
-    PERF_ZONE_SCOPED;
+    ZoneScoped;
     auto& registry = PerfRegistry::get();
     auto  groups   = registry.byCategory();
 
@@ -208,7 +208,7 @@ void DrawUI(float deltaTime) {
     // --- 更新所有激活的用例 ---
     for (auto* pc : registry.allCases()) {
         if (pc->active) {
-            PERF_ZONE_SCOPED_N("PerfCase::onUpdate");
+            ZoneScopedN("PerfCase::onUpdate");
             auto start = std::chrono::high_resolution_clock::now();
             pc->onUpdate(deltaTime);
             auto end = std::chrono::high_resolution_clock::now();
@@ -305,7 +305,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int) {
         ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
         g_pSwapChain->Present(1, 0);
-        PERF_FRAME_MARK;
+        FrameMark;
     }
 
     for (auto* pc : PerfRegistry::get().allCases()) {

@@ -7,6 +7,7 @@
  */
 
 #include "perf_case.h"
+#include "tracy_integration.h"
 #include "imgui.h"
 #include <vector>
 #include <thread>
@@ -23,6 +24,7 @@ public:
     }
 
     void onUpdate(float) override {
+        ZoneScopedN("ThreadContention");
         volatile int64_t counter = 0;
         std::mutex mtx;
         int opsPerThread = ops_ / threads_;

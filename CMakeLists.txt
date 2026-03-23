@@ -19,20 +19,21 @@ endif()
 # 启用后需运行 Tracy Profiler GUI 连接目标进程查看实时数据
 # 下载地址: https://github.com/wolfpld/tracy/releases
 # ============================================================
-option(PERF_ENABLE_TRACY "Enable Tracy Profiler integration" OFF)
+option(PERF_ENABLE_TRACY     "Enable Tracy Profiler integration" OFF)
+option(PERF_ENABLE_TELEMETRY "Enable production telemetry system"  OFF)
 
 include(FetchContent)
 
+# ============================================================
+# Tracy Profiler (通过 git submodule 管理: third_party/tracy)
+#
+# 首次克隆后需初始化 submodule:
+#   git submodule update --init --recursive
+# ============================================================
 if(PERF_ENABLE_TRACY)
     set(TRACY_ENABLE ON CACHE BOOL "Enable Tracy profiling" FORCE)
-    FetchContent_Declare(
-        tracy
-        GIT_REPOSITORY https://github.com/wolfpld/tracy.git
-        GIT_TAG        v0.13.1
-        GIT_SHALLOW    TRUE
-    )
-    FetchContent_MakeAvailable(tracy)
-    message(STATUS "Tracy Profiler ENABLED (v0.13.1)")
+    add_subdirectory(third_party/tracy)
+    message(STATUS "Tracy Profiler ENABLED (submodule: third_party/tracy)")
 else()
     message(STATUS "Tracy Profiler DISABLED (use -DPERF_ENABLE_TRACY=ON to enable)")
 endif()

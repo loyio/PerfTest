@@ -6,6 +6,7 @@
  */
 
 #include "perf_case.h"
+#include "tracy_integration.h"
 #include "imgui.h"
 #include <vector>
 #include <cstring>
@@ -32,6 +33,7 @@ public:
     }
 
     void onUpdate(float) override {
+        ZoneScopedN("MemoryLeak");
         if (!leaking_) return;
 
         for (int i = 0; i < leaksPerFrame_; i++) {
@@ -40,6 +42,7 @@ public:
             leaked_.push_back(p);
         }
         totalLeakedBytes_ += static_cast<size_t>(leaksPerFrame_) * leakSizeBytes_;
+        TracyPlot("LeakedMB", totalLeakedBytes_ / (1024.0 * 1024.0));
     }
 
     void onDrawUI() override {
@@ -79,6 +82,7 @@ private:
     size_t totalLeakedBytes_ = 0;
 
     void freeAll() {
+        ZoneScopedN("MemoryLeak_FreeAll");
         for (void* p : leaked_) std::free(p);
         leaked_.clear();
         totalLeakedBytes_ = 0;

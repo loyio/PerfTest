@@ -5,6 +5,7 @@
  */
 
 #include "perf_case.h"
+#include "tracy_integration.h"
 #include "imgui.h"
 #include <vector>
 #include <thread>
@@ -58,6 +59,7 @@ private:
     float singleMs_ = 0, shardedMs_ = 0, atomicMs_ = 0;
 
     void runBenchmark() {
+        ZoneScopedN("LockContention_Bench");
         int nThreads = threadCount_;
         int ops = opsK_ * 1000;
         benchThreads_ = nThreads;

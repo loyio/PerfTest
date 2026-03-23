@@ -32,7 +32,7 @@ public:
     }
 
     void onUpdate(float dt) override {
-        PERF_ZONE_SCOPED_N("ParticleUpdate");
+        ZoneScopedN("ParticleUpdate");
         if (static_cast<int>(particles_.size()) != count_) rebuild();
 
         for (auto& p : particles_) {

@@ -6,6 +6,7 @@
  */
 
 #include "perf_case.h"
+#include "tracy_integration.h"
 #include "imgui.h"
 #include <fstream>
 #include <sstream>
@@ -65,6 +66,7 @@ public:
     }
 
     void onUpdate(float) override {
+        ZoneScopedN("BlockingIO");
         if (!perFrameIo_) return;
         // 模拟每帧写日志
         std::ofstream f("_perf_log.tmp", std::ios::app);
@@ -93,6 +95,7 @@ private:
     const std::string line_ = "Test log line with some data: 1234567890 ABCDEF\n";
 
     void benchmarkWrite() {
+        ZoneScopedN("BlockingIO_BenchWrite");
         constexpr int RUNS = 3;
         float f1 = 0, f2 = 0, f3 = 0;
         int lines = writeLines_;
@@ -121,6 +124,7 @@ private:
     }
 
     void benchmarkRead() {
+        ZoneScopedN("BlockingIO_BenchRead");
         // Prepare test file (~5MB)
         {
             std::ofstream f("_perf_io_test.tmp", std::ios::binary);

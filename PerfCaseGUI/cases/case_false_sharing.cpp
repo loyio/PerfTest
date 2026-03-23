@@ -6,6 +6,7 @@
  */
 
 #include "perf_case.h"
+#include "tracy_integration.h"
 #include "imgui.h"
 #include <vector>
 #include <thread>
@@ -66,6 +67,7 @@ private:
     };
 
     void runBenchmark() {
+        ZoneScopedN("FalseSharing_Bench");
         int nThreads = threadCount_;
         int ops = opsK_ * 1000;
         benchThreads_ = nThreads;

@@ -27,7 +27,7 @@ public:
     }
 
     void onUpdate(float) override {
-        PERF_ZONE_SCOPED_N("AllocStress");
+        ZoneScopedN("AllocStress");
         std::vector<void*> ptrs;
         ptrs.reserve(allocCount_);
 

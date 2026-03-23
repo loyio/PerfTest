@@ -69,7 +69,7 @@ inline BenchmarkResult benchmark(const std::string& name,
                                   std::function<void()> func,
                                   int iterations = 100)
 {
-    PERF_ZONE_SCOPED_N("perf::benchmark");
+    ZoneScopedN("perf::benchmark");
     std::vector<double> times;
     times.reserve(iterations);
 

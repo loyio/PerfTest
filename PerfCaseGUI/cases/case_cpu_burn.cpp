@@ -21,7 +21,7 @@ public:
     }
 
     void onUpdate(float) override {
-        PERF_ZONE_SCOPED_N("CpuBurn");
+        ZoneScopedN("CpuBurn");
         volatile double result = 0;
         for (int i = 0; i < iterations_; i++) {
             result += std::sin(static_cast<double>(i) * 0.001) *

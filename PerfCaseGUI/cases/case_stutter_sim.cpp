@@ -6,6 +6,7 @@
  */
 
 #include "perf_case.h"
+#include "tracy_integration.h"
 #include "imgui.h"
 #include <random>
 #include <thread>
@@ -23,6 +24,7 @@ public:
     }
 
     void onUpdate(float) override {
+        ZoneScopedN("StutterSim");
         std::uniform_int_distribution<int> dist(1, 100);
         if (dist(rng_) <= chancePct_) {
             if (useBusyWait_) {
