@@ -107,13 +107,13 @@ inline uint32_t CurrentThreadId() {
 enum class EventType : uint8_t {
     ZoneBegin,
     ZoneEnd,
-    FrameMark,
+    Frame,          // 避免与 Tracy 的 #define FrameMark 冲突
     LockWait,
     LockAcquire,
     LockRelease,
-    Message,
+    Msg,            // 避免与 Windows SendMessage 等宏冲突
     ThreadName,
-    Plot
+    PlotValue       // 避免与潜在宏冲突
 };
 
 // ============================================================
@@ -223,7 +223,7 @@ inline void RecordZoneEnd() {
 inline void RecordFrameMark(const char* name = nullptr) {
     auto& ts = GetThreadState();
     Event e{};
-    e.type = EventType::FrameMark;
+    e.type = EventType::Frame;
     e.threadId = ts.threadId;
     e.timestamp = Now();
     e.name = name;
@@ -245,7 +245,7 @@ inline void RecordLockEvent(EventType type, uint32_t lockId, const char* name) {
 inline void RecordMessage(const char* text) {
     auto& ts = GetThreadState();
     Event e{};
-    e.type = EventType::Message;
+    e.type = EventType::Msg;
     e.threadId = ts.threadId;
     e.timestamp = Now();
     e.name = text;
@@ -256,7 +256,7 @@ inline void RecordMessage(const char* text) {
 inline void RecordPlot(const char* name, double val) {
     auto& ts = GetThreadState();
     Event e{};
-    e.type = EventType::Plot;
+    e.type = EventType::PlotValue;
     e.threadId = ts.threadId;
     e.timestamp = Now();
     e.name = name;

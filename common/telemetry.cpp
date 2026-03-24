@@ -515,7 +515,7 @@ void Manager::exportChromeTrace(const std::string& path) {
               << ",\"ts\":" << e.timestamp << "}";
             break;
 
-        case EventType::FrameMark:
+        case EventType::Frame:
             comma();
             f << "{\"ph\":\"i\",\"name\":\"" << (e.name ? e.name : "Frame")
               << "\",\"cat\":\"frame\",\"pid\":" << pid
@@ -558,7 +558,7 @@ void Manager::exportChromeTrace(const std::string& path) {
               << ",\"args\":{\"lock_id\":" << e.lockId << "}}";
             break;
 
-        case EventType::Message:
+        case EventType::Msg:
             comma();
             f << "{\"ph\":\"i\",\"name\":\"" << (e.name ? e.name : "")
               << "\",\"cat\":\"msg\",\"pid\":" << pid
@@ -573,7 +573,7 @@ void Manager::exportChromeTrace(const std::string& path) {
               << ",\"args\":{\"name\":\"" << (e.name ? e.name : "?") << "\"}}";
             break;
 
-        case EventType::Plot:
+        case EventType::PlotValue:
             comma();
             f << "{\"ph\":\"C\",\"name\":\"" << (e.name ? e.name : "?")
               << "\",\"pid\":" << pid
